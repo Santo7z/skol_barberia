@@ -1,0 +1,12 @@
+{
+  "name": "peluqueria",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page Skol Barber",
+  "scripts": {
+    "dev": "live-server . --port=8080 --open=stitch_landing_page_skol_barber_a/skol_barber_a_landing_desktop/code.html --ignore=node_modules"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

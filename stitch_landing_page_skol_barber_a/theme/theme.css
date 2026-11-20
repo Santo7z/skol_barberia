@@ -1,0 +1,157 @@
+/* =========================================================
+   SKOL — Tema visual (street / urbano)
+   Todos los colores viven acá como tripletas RGB para que
+   Tailwind pueda aplicar opacidad (bg-primary/20, etc.).
+   Para iterar la paleta, cambiá SOLO estas variables.
+   ========================================================= */
+:root {
+  /* Base: negros y grises asfalto */
+  --bg:          10 10 10;     /* fondo principal */
+  --bg-lowest:    5 5 5;       /* franjas más oscuras */
+  --bg-low:      16 16 16;
+  --bg-1:        21 21 21;     /* tarjetas */
+  --bg-2:        30 30 30;     /* tarjetas destacadas / botones secundarios */
+  --bg-3:        42 42 42;     /* inputs, chips */
+
+  /* Texto */
+  --ink:        237 235 230;   /* blanco roto */
+  --ink-muted:  163 161 155;
+  --line:        51 51 51;     /* bordes finos */
+  --line-strong: 107 105 100;
+
+  /* Acentos */
+  --accent:       212 255 58;  /* verde ácido */
+  --accent-hover: 230 255 128;
+  --on-accent:     10 10 10;
+  --accent-2:     255 90 31;   /* naranja quemado (uso puntual) */
+  --on-accent-2:   10 10 10;
+  --error:        255 84 84;
+}
+
+/* ---------- Tipografía ---------- */
+/* Títulos: Archivo condensada, pesada y en mayúsculas */
+html .font-display-hero,
+html .font-display-hero-mobile,
+html .font-headline-lg,
+html .font-headline-lg-mobile {
+  font-stretch: 70%;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+html .font-headline-md,
+html .font-headline-sm {
+  font-stretch: 75%;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+/* Etiquetas y botones: mono en mayúsculas */
+html .font-label-lg,
+html .font-label-md,
+html .font-label-sm {
+  text-transform: uppercase;
+}
+
+/* ---------- Logo ---------- */
+/* El JPG tiene fondo negro: con "screen" el negro desaparece
+   sobre el fondo oscuro y solo quedan las letras blancas. */
+html img[src$="logo.jpg"] {
+  mix-blend-mode: screen;
+  border-radius: 0;
+}
+
+/* ---------- Scroll suave ---------- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px; /* que el header fijo no tape los títulos */
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+/* Lenis (scroll con inercia, ver theme/scroll.js) maneja el
+   desplazamiento: el smooth nativo se apaga para no pelearse. */
+html.lenis, html.lenis body { height: auto; }
+html.lenis.lenis-smooth { scroll-behavior: auto !important; }
+html.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+::selection {
+  background: rgb(var(--accent));
+  color: rgb(var(--on-accent));
+}
+
+/* ---------- Estructura ---------- */
+/* Separadores limpios entre secciones */
+html main section {
+  border-top: 1px solid rgb(var(--line));
+}
+
+/* Tarjetas: borde fino en vez de sombras difusas */
+html .bg-surface-container:not([class*="border-"]),
+html .bg-surface-container-high:not([class*="border-"]),
+html .bg-surface-container-highest:not([class*="border-"]) {
+  border: 1px solid rgb(var(--line));
+}
+html [class*="hover:bg-surface-container-high"] {
+  transition: border-color .15s ease, background-color .15s ease, transform .15s ease;
+}
+html [class*="hover:bg-surface-container-high"]:hover {
+  border-color: rgb(var(--accent));
+}
+
+/* ---------- Micro-interacciones ---------- */
+/* Botón principal: sombra dura desplazada al pasar el mouse */
+html .bg-primary-container,
+html .bg-primary {
+  transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease;
+}
+html a.bg-primary-container:hover,
+html button.bg-primary-container:hover,
+html a.bg-primary:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 3px 3px 0 rgb(var(--ink));
+}
+html a.bg-primary-container:active,
+html button.bg-primary-container:active {
+  transform: translate(0, 0);
+  box-shadow: none;
+}
+
+/* Fotos en blanco y negro; vuelven a color al pasar el mouse */
+html main img {
+  filter: grayscale(1) contrast(1.1);
+  transition: filter .3s ease, transform .5s ease;
+}
+html main .group:hover img {
+  filter: grayscale(0) contrast(1);
+}
+
+/* ---------- Cinta / ticker ---------- */
+.ticker {
+  overflow: hidden;
+  width: 100%;
+  min-width: 0;   /* evita que la cinta estire el layout flex en móvil */
+  background: rgb(var(--accent));
+  color: rgb(var(--on-accent));
+  border-block: 2px solid rgb(var(--bg));
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 30s linear infinite;
+}
+.ticker span {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 10px 0;
+}
+@keyframes ticker {
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+  html main img, html .bg-primary-container { transition: none; }
+}

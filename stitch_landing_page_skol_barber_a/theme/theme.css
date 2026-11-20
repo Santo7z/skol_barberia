@@ -20,8 +20,8 @@
   --line-strong: 107 105 100;
 
   /* Acentos */
-  --accent:       212 255 58;  /* verde ácido */
-  --accent-hover: 230 255 128;
+  --accent:       214 236 36;  /* amarillo-verde ácido de las capas del local */
+  --accent-hover: 228 245 110;
   --on-accent:     10 10 10;
   --accent-2:     255 90 31;   /* naranja quemado (uso puntual) */
   --on-accent-2:   10 10 10;
@@ -116,13 +116,47 @@ html button.bg-primary-container:active {
   box-shadow: none;
 }
 
-/* Fotos en blanco y negro; vuelven a color al pasar el mouse */
+/* Fotos a color: los colores fantasía son parte de la marca */
 html main img {
-  filter: grayscale(1) contrast(1.1);
-  transition: filter .3s ease, transform .5s ease;
+  transition: transform .5s ease;
 }
-html main .group:hover img {
-  filter: grayscale(0) contrast(1);
+
+/* ---------- Motivos del local ---------- */
+/* Salpicadura de pintura (paredes y capas del local) */
+.splatter { position: relative; isolation: isolate; }
+.splatter::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(420px, 70%);
+  aspect-ratio: 1;
+  background: url("splatter.svg") no-repeat center / contain;
+  opacity: .14;
+  transform: rotate(-12deg);
+  z-index: -1;
+  pointer-events: none;
+}
+/* Piso a cuadros blanco y negro */
+.checker {
+  height: 18px;
+  background: repeating-conic-gradient(rgb(var(--ink)) 0 25%, rgb(var(--bg)) 0 50%) 0 0 / 36px 36px;
+}
+/* Texto tipo placa de Instagram ("HOY DÍA DE CEJAS") */
+.sticker {
+  display: inline-block;
+  font-family: "Archivo", sans-serif;
+  font-stretch: 70%;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #fff;
+  -webkit-text-stroke: 1.5px #000;
+  paint-order: stroke fill;
+  text-shadow: 3px 3px 0 #000;
+  transform: rotate(-4deg);
 }
 
 /* ---------- Cinta / ticker ---------- */
